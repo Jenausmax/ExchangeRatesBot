@@ -14,7 +14,7 @@ using Serilog;
 
 namespace ExchangeRatesBot.App.Services
 {
-    public class ProcessingService
+    public class ProcessingService : IProcessingService
     {
         private readonly IApiClient _client;
         private readonly IOptions<BotConfig> _config;
@@ -29,11 +29,11 @@ namespace ExchangeRatesBot.App.Services
             _logger = logger;
         }
 
-        public async Task<Valute> RequestProcessing(CancellationToken cancel)
+        public async Task<Valute> RequestProcessing(int day, string charCode, CancellationToken cancel)
         {
             try
             {
-                var resp = await _client.Client.PostAsync("", new StringContent(""));
+                var resp = await _client.Client.PostAsync($"/?charcode={charCode}&day={day}", null);
                 var resultContent = await resp.Content.ReadAsStreamAsync();
                 var res = await JsonSerializer.DeserializeAsync<Valute>(resultContent);
                 _logger.Information("Deserialize succes");

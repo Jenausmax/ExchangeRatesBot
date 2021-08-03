@@ -5,11 +5,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ExchangeRatesBot.Configuration.ModelConfig;
+using ExchangeRatesBot.Domain.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace ExchangeRatesBot.App.Services
 {
-    public class ApiClientService
+    public class ApiClientService : IApiClient
     {
         public HttpClient Client { get; set; }
 
