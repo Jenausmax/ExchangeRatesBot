@@ -9,7 +9,6 @@ namespace ExchangeRatesBot.App.Services
     public class CommandService : ICommandBot
     {
         private readonly IUpdateService _updateService;
-        private readonly IProcessingService _processingService;
         private readonly IMessageValute _valuteService;
         private Update _update;
 
@@ -18,7 +17,6 @@ namespace ExchangeRatesBot.App.Services
             IMessageValute valuteService)
         {
             _updateService = updateService;
-            _processingService = processingService;
             _valuteService = valuteService;
         }
 
@@ -66,18 +64,14 @@ namespace ExchangeRatesBot.App.Services
             switch (message)
             {
                 case "/start":
-
                     await _updateService.EchoTextMessageAsync(
                         update,
-                        await _valuteService.GetValuteMessage(7, "USD", CancellationToken.None),//BotPhrases.Help,
+                        await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),//BotPhrases.Help,
                         default);
-                    //await _updateService.EchoTextMessageAsync(
-                    //    update,
-                    //    BotPhrases.Start,
-                    //    _keyboardBotCreate.CreateInlineKeyboard(
-                    //        callBack: default,
-                    //        key: default,
-                    //        keyCollection: BotPhrases.AllCommandMenu()));
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),//BotPhrases.Help,
+                        default);
                     break;
 
 

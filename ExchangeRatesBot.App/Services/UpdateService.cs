@@ -31,7 +31,7 @@ namespace ExchangeRatesBot.App.Services
                     newMessage.Text = message;
                     await _botService.Client.SendTextMessageAsync(newMessage.Chat.Id,
                         newMessage.Text,
-                        parseMode: default,
+                        parseMode: ParseMode.Markdown,
                         entities: null,
                         disableWebPagePreview: false,
                         disableNotification: false,
@@ -49,7 +49,7 @@ namespace ExchangeRatesBot.App.Services
                     newMessageCallbackQueryMessage.Text = message;
                     await _botService.Client.SendTextMessageAsync(newMessageCallbackQueryMessage.Chat.Id,
                         newMessageCallbackQueryMessage.Text,
-                        parseMode: default,
+                        parseMode: ParseMode.Markdown,
                         entities: null,
                         disableWebPagePreview: false,
                         disableNotification: false,

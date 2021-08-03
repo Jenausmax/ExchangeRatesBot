@@ -23,18 +23,16 @@ namespace ExchangeRatesBot.App.Services
 
         public async Task<string> GetValuteMessage(int day, string charCode, CancellationToken cancel)
         {
-            var valutesRoot = _processingService.RequestProcessing(day, charCode, cancel);
+            var valutesRoot = await _processingService.RequestProcessing(day, charCode, cancel);
 
-            if (valutesRoot == null)
+            if (valutesRoot == null || day == 0)
             {
                 _logger.Error($"Type error: {typeof(MessageValuteService)}.: Collection null");
                 return " ";
             }
 
-            var getValutesModels = valutesRoot.Result.GetValuteModels;
+            var getValutesModels = valutesRoot.GetValuteModels;
             var valutes = new List<Valute>();
-            var res = "";
-
             foreach (var item in getValutesModels)
             {
                 
@@ -47,9 +45,51 @@ namespace ExchangeRatesBot.App.Services
                 });
             }
 
-            foreach (var valute in valutes)
+            #region высчитываем Difference
+
+            if (day >= 3)
             {
-                res = res + $"{valute.Name}:на дату: {valute.DateValute} --> {valute.Value}";
+                for (int i = 0; i < valutes.Count; i++)
+                {
+                    if (i != valutes.Count - 1)
+                    {
+                        if (valutes[i].Value > valutes[i + 1].Value)
+                        {
+                            var temp = valutes[i].Value - valutes[i + 1].Value;
+                            valutes[i + 1].Difference = $"- *{string.Format("{0:0.00}", temp)}*";
+                        }
+                        else
+                        {
+                            var temp = valutes[i + 1].Value - valutes[i].Value;
+                            valutes[i + 1].Difference = $"+ *{string.Format("{0:0.00}", temp)}*";
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            string res = $"*{valutes[0].Name}* \n\r {valutes[0].CharCode}/RUB \n\r  \n\r";
+            var v = valutes;
+            if (day >= 3)
+            {
+                v = valutes
+                    .GroupBy(e => e.DateValute)
+                    .Select(g => g.First())
+                    .Skip(1).ToList();
+            }
+            else
+            {
+                v = valutes
+                    .GroupBy(e => e.DateValute)
+                    .Select(g => g.First())
+                    .ToList();
+            }
+
+            
+
+            foreach (var valute in v)
+            {
+                res = res + $" {valute.DateValute} --> {valute.Value}  {valute.Difference} \n\r ";
             }
 
             return res;
