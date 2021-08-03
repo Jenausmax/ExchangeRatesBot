@@ -7,18 +7,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExchangeRatesBot.Configuration.ModelConfig;
+using Microsoft.Extensions.Configuration;
 
 namespace ExchangeRatesBot
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public IConfiguration Config { get; }
+
+        public Startup(IConfiguration config)
         {
+            Config = config;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.Configure<BotConfig>(Config.GetSection("BotConfig"));
+            services.AddControllers();
+        }
+
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -30,10 +39,7 @@ namespace ExchangeRatesBot
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
