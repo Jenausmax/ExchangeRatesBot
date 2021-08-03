@@ -25,6 +25,7 @@ namespace ExchangeRatesBot
             services.AddScoped<IProcessingService, ProcessingService>();
             services.AddScoped<ICommandBot, CommandService>();
             services.AddScoped<IApiClient, ApiClientService>();
+            services.AddScoped<IMessageValute, MessageValuteService>();
 
             services.Configure<BotConfig>(Config.GetSection("BotConfig"));
 

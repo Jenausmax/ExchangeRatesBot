@@ -10,12 +10,16 @@ namespace ExchangeRatesBot.App.Services
     {
         private readonly IUpdateService _updateService;
         private readonly IProcessingService _processingService;
+        private readonly IMessageValute _valuteService;
         private Update _update;
 
-        public CommandService(IUpdateService updateService, IProcessingService processingService)
+        public CommandService(IUpdateService updateService, 
+            IProcessingService processingService,
+            IMessageValute valuteService)
         {
             _updateService = updateService;
             _processingService = processingService;
+            _valuteService = valuteService;
         }
 
         public async Task SetUpdateBot(Update update)
@@ -33,11 +37,25 @@ namespace ExchangeRatesBot.App.Services
                     break;
 
                 case UpdateType.CallbackQuery:
-                    
+                    await CallbackMessageCommand(_update);
                     break;
 
                 default:
                     //TODO Доделать ответ на неправильное сообщение от пользователя
+                    break;
+            }
+        }
+
+        private async Task CallbackMessageCommand(Update update)
+        {
+            var callbackData = update.CallbackQuery.Data;
+            switch (callbackData)
+            {
+                case "7 Day":
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(7, "USD", CancellationToken.None),//BotPhrases.Help,
+                        default);
                     break;
             }
         }
@@ -49,7 +67,10 @@ namespace ExchangeRatesBot.App.Services
             {
                 case "/start":
 
-                    var val = await _processingService.RequestProcessing(4, "USD", CancellationToken.None);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(7, "USD", CancellationToken.None),//BotPhrases.Help,
+                        default);
                     //await _updateService.EchoTextMessageAsync(
                     //    update,
                     //    BotPhrases.Start,
@@ -57,11 +78,6 @@ namespace ExchangeRatesBot.App.Services
                     //        callBack: default,
                     //        key: default,
                     //        keyCollection: BotPhrases.AllCommandMenu()));
-
-                    if (val == null)
-                    {
-
-                    }
                     break;
 
 
