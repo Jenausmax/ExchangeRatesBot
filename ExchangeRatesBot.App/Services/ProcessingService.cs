@@ -29,13 +29,13 @@ namespace ExchangeRatesBot.App.Services
             _logger = logger;
         }
 
-        public async Task<Valute> RequestProcessing(int day, string charCode, CancellationToken cancel)
+        public async Task<Root> RequestProcessing(int day, string charCode, CancellationToken cancel)
         {
             try
             {
-                var resp = await _client.Client.PostAsync($"/?charcode={charCode}&day={day}", null);
+                var resp = await _client.Client.PostAsync($"?charcode={charCode}&day={day}", null);
                 var resultContent = await resp.Content.ReadAsStreamAsync();
-                var res = await JsonSerializer.DeserializeAsync<Valute>(resultContent);
+                var res = await JsonSerializer.DeserializeAsync<Root>(resultContent);
                 _logger.Information("Deserialize succes");
                 return res;
             }

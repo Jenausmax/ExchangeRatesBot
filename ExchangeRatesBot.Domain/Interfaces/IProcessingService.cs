@@ -10,6 +10,6 @@ namespace ExchangeRatesBot.Domain.Interfaces
 {
     public interface IProcessingService
     {
-        Task<Valute> RequestProcessing(int day, string charCode, CancellationToken cancel);
+        Task<Root> RequestProcessing(int day, string charCode, CancellationToken cancel);
     }
 }

@@ -28,7 +28,7 @@ namespace ExchangeRatesBot
 
             services.Configure<BotConfig>(Config.GetSection("BotConfig"));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
         }
 
 
