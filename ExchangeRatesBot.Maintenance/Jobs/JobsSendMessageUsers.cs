@@ -41,23 +41,17 @@ namespace ExchangeRatesBot.Maintenance.Jobs
             var repo = scope.GetRequiredService<IBaseRepositoryDb<UserDb>>();
             var messageValute = scope.GetRequiredService<IMessageValute>();
 
-            var messageUSD = await messageValute.GetValuteMessage(8, "USD", cancel);
-            var messageEUR = await messageValute.GetValuteMessage(8, "EUR", cancel);
-            var messageCHY = await messageValute.GetValuteMessage(8, "CNY", cancel);
-            var messageGBP = await messageValute.GetValuteMessage(8, "GBP", cancel);
-            var messageJPY = await messageValute.GetValuteMessage(8, "JPY", cancel);
-
-            var messagUSD = await messageValute.GetValuteMessage(1, "USD", cancel);
-            var messagEUR = await messageValute.GetValuteMessage(1, "EUR", cancel);
-            var messagCHY = await messageValute.GetValuteMessage(1, "CNY", cancel);
-            var messagGBP = await messageValute.GetValuteMessage(1, "GBP", cancel);
-            var messagJPY = await messageValute.GetValuteMessage(1, "JPY", cancel);
-
             var usersCollectionDb = await repo.GetCollection(cancel);
             var users = usersCollectionDb.Where(u => u.Subscribe == true);
 
             if (timeNow == timeOne)
             {
+                var messagUSD = await messageValute.GetValuteMessage(1, "USD", cancel);
+                var messagEUR = await messageValute.GetValuteMessage(1, "EUR", cancel);
+                var messagCHY = await messageValute.GetValuteMessage(1, "CNY", cancel);
+                var messagGBP = await messageValute.GetValuteMessage(1, "GBP", cancel);
+                var messagJPY = await messageValute.GetValuteMessage(1, "JPY", cancel);
+
                 if (users.Any())
                 {
                     foreach (var userDb in users)
@@ -75,6 +69,12 @@ namespace ExchangeRatesBot.Maintenance.Jobs
 
             if (timeNow == timeTwo)
             {
+                var messageUSD = await messageValute.GetValuteMessage(8, "USD", cancel);
+                var messageEUR = await messageValute.GetValuteMessage(8, "EUR", cancel);
+                var messageCHY = await messageValute.GetValuteMessage(8, "CNY", cancel);
+                var messageGBP = await messageValute.GetValuteMessage(8, "GBP", cancel);
+                var messageJPY = await messageValute.GetValuteMessage(8, "JPY", cancel);
+
                 if (users.Any())
                 {
                     foreach (var userDb in users)

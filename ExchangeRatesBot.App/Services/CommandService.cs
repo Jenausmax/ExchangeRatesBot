@@ -98,12 +98,19 @@ namespace ExchangeRatesBot.App.Services
             var message = update.Message.Text;
             switch (message)
             {
+                case "/start":
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        BotPhrases.StartMenu + $"\n\r /subscribe - подписка \n\r /valuteoneday - курс на сегодня \n\r /valutesevendays - курс за последние 7 дней",
+                        new InlineKeyboardMarkup(Menu()));
+                    break;
+
                 case "/subscribe":
                     await _updateService.EchoTextMessageAsync(
                         update,
                         BotPhrases.StartMenu,
                         new InlineKeyboardMarkup(Menu()));
-                    break;
+                    break; 
 
                 case "/valutesevendays":
                     await _updateService.EchoTextMessageAsync(
@@ -165,6 +172,15 @@ namespace ExchangeRatesBot.App.Services
             var buttons = new List<InlineKeyboardButton>();
             buttons.Add(InlineKeyboardButton.WithCallbackData("Подписаться"));
             buttons.Add(InlineKeyboardButton.WithCallbackData("Отписаться"));
+            return buttons;
+        }
+
+        private List<InlineKeyboardButton> MenuStart()
+        {
+            var buttons = new List<InlineKeyboardButton>();
+            buttons.Add(InlineKeyboardButton.WithCallbackData("/subscribe"));
+            buttons.Add(InlineKeyboardButton.WithCallbackData("/valutesevendays"));
+            uttons.Add(InlineKeyboardButton.WithCallbackData("/valuteoneday"));
             return buttons;
         }
 
