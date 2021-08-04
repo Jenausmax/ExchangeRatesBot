@@ -52,12 +52,6 @@ namespace ExchangeRatesBot.App.Services
             var callbackData = update.CallbackQuery.Data;
             switch (callbackData)
             {
-                case "7 Day":
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(7, "USD", CancellationToken.None),//BotPhrases.Help,
-                        default);
-                    break;
 
                 case "Подписаться":
                     break;
@@ -105,5 +99,6 @@ namespace ExchangeRatesBot.App.Services
             buttons.Add(button2);
             return buttons;
         }
+
     }
 }

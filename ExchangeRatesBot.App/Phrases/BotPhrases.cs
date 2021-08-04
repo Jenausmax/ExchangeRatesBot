@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExchangeRatesBot.App.Phrases
+﻿namespace ExchangeRatesBot.App.Phrases
 {
     public static class BotPhrases
     {
-        public static string StartMenu { get; set; } = "";
+        public static string StartMenu { get; } = "Доброго времени суток! *Подписка* - получать курсы валют USD, EUR, CNY, GBP, JPY за последние 7 дней.";
     }
 }
