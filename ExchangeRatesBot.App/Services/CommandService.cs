@@ -120,13 +120,9 @@ namespace ExchangeRatesBot.App.Services
 
         private List<InlineKeyboardButton> Menu()
         {
-            var button = new InlineKeyboardButton();
-            button.Text = "Подписаться";
-            var button2 = new InlineKeyboardButton();
-            button2.Text = "Отписаться";
             var buttons = new List<InlineKeyboardButton>();
-            buttons.Add(button);
-            buttons.Add(button2);
+            buttons.Add(InlineKeyboardButton.WithCallbackData("Подписаться"));
+            buttons.Add(InlineKeyboardButton.WithCallbackData("Отписаться"));
             return buttons;
         }
 
