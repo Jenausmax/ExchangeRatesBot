@@ -3,6 +3,7 @@ using ExchangeRatesBot.Configuration.ModelConfig;
 using ExchangeRatesBot.DB;
 using ExchangeRatesBot.DB.Repositories;
 using ExchangeRatesBot.Domain.Interfaces;
+using ExchangeRatesBot.Maintenance.Jobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,8 @@ namespace ExchangeRatesBot
             services.AddScoped(typeof(IBaseRepositoryDb<>), (typeof(RepositoryDb<>)));
 
             services.Configure<BotConfig>(Config.GetSection("BotConfig"));
+
+            services.AddHostedService<JobsSendMessageUsers>();
 
             services.AddControllers().AddNewtonsoftJson();
         }

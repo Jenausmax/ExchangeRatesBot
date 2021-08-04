@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ExchangeRatesBot.App\ExchangeRatesBot.App.csproj" />
     <ProjectReference Include="..\ExchangeRatesBot.DB\ExchangeRatesBot.DB.csproj" />
+    <ProjectReference Include="..\ExchangeRatesBot.Maintenance\ExchangeRatesBot.Maintenance.csproj" />
     <ProjectReference Include="..\ExchangeRatesBot.Migrations\ExchangeRatesBot.Migrations.csproj" />
   </ItemGroup>
 
