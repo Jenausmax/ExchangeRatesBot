@@ -174,15 +174,5 @@ namespace ExchangeRatesBot.App.Services
             buttons.Add(InlineKeyboardButton.WithCallbackData("Отписаться"));
             return buttons;
         }
-
-        private List<InlineKeyboardButton> MenuStart()
-        {
-            var buttons = new List<InlineKeyboardButton>();
-            buttons.Add(InlineKeyboardButton.WithCallbackData("/subscribe"));
-            buttons.Add(InlineKeyboardButton.WithCallbackData("/valutesevendays"));
-            uttons.Add(InlineKeyboardButton.WithCallbackData("/valuteoneday"));
-            return buttons;
-        }
-
     }
 }
