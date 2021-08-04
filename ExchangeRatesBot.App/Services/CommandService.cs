@@ -61,7 +61,10 @@ namespace ExchangeRatesBot.App.Services
                     break;
 
                 default:
-                    //TODO Доделать ответ на неправильное сообщение от пользователя
+                    await _updateService.EchoTextMessageAsync(
+                        _update,
+                        BotPhrases.Error,
+                        default);
                     break;
             }
         }
@@ -95,13 +98,6 @@ namespace ExchangeRatesBot.App.Services
             var message = update.Message.Text;
             switch (message)
             {
-                case "/start":
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        BotPhrases.StartMenu,
-                        new InlineKeyboardMarkup(Menu()));
-                    break;
-
                 case "/subscribe":
                     await _updateService.EchoTextMessageAsync(
                         update,
@@ -109,7 +105,7 @@ namespace ExchangeRatesBot.App.Services
                         new InlineKeyboardMarkup(Menu()));
                     break;
 
-                case "/valute7days":
+                case "/valutesevendays":
                     await _updateService.EchoTextMessageAsync(
                         update,
                         await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),
@@ -132,7 +128,34 @@ namespace ExchangeRatesBot.App.Services
                         default);
                     break;
 
+                case "/valuteoneday":
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(1, "USD", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(1, "EUR", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(1, "CNY", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(1, "GBP", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(1, "JPY", CancellationToken.None),
+                        default);
+                    break;
+
                 default:
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        BotPhrases.Error,
+                        default);
                     break;
             }
         }
