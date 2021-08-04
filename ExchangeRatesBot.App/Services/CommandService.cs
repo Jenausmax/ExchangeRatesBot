@@ -3,6 +3,7 @@ using ExchangeRatesBot.Domain.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 using ExchangeRatesBot.App.Phrases;
+using ExchangeRatesBot.App.StaticModels;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -73,9 +74,19 @@ namespace ExchangeRatesBot.App.Services
             {
 
                 case "Подписаться":
+                    await _userControl.SubscribeUpdate(CurrentUser.ChatId, true, CancellationToken.None);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        BotPhrases.SubscribeTrue,
+                        default);
                     break;
 
                 case "Отписаться":
+                    await _userControl.SubscribeUpdate(CurrentUser.ChatId, false, CancellationToken.None);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        BotPhrases.SubscribeFalse,
+                        default);
                     break;
             }
         }
@@ -86,14 +97,14 @@ namespace ExchangeRatesBot.App.Services
             switch (message)
             {
                 case "/start":
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),
-                        default);
+                    //await _updateService.EchoTextMessageAsync(
+                    //    update,
+                    //    await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),
+                    //    default);
+                    //await _updateService.EchoTextMessageAsync(
+                    //    update,
+                    //    await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),
+                    //    default);
 
                     await _updateService.EchoTextMessageAsync(
                         update,

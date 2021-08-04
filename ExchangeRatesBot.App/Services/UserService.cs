@@ -54,7 +54,7 @@ namespace ExchangeRatesBot.App.Services
             return await _userDb.Create(userDb, cancel);
         }
 
-        public async Task<bool> SubscribeUpdate(int chatId, bool subscribe, CancellationToken cancel)
+        public async Task<bool> SubscribeUpdate(long chatId, bool subscribe, CancellationToken cancel)
         {
             var usersDb = await _userDb.GetCollection(cancel);
 
