@@ -5,13 +5,19 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeRatesBot", "ExchangeRatesBot\ExchangeRatesBot.csproj", "{5BD3D6F2-2384-4A6A-B326-3EBA5989A0DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRatesBot.Configuration", "ExchangeRatesBot.Configuration\ExchangeRatesBot.Configuration.csproj", "{C8F8116E-4FEB-4037-93F5-A60547DC6FD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeRatesBot.Configuration", "ExchangeRatesBot.Configuration\ExchangeRatesBot.Configuration.csproj", "{C8F8116E-4FEB-4037-93F5-A60547DC6FD9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3139BA97-31A0-409B-961D-746C8B117409}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRatesBot.Domain", "ExchangeRatesBot.Domain\ExchangeRatesBot.Domain.csproj", "{1CAA4480-0F27-42FC-B134-08FBE292AF87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeRatesBot.Domain", "ExchangeRatesBot.Domain\ExchangeRatesBot.Domain.csproj", "{1CAA4480-0F27-42FC-B134-08FBE292AF87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRatesBot.App", "ExchangeRatesBot.App\ExchangeRatesBot.App.csproj", "{28596329-3C6C-4313-B4BB-0BD591034F10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeRatesBot.App", "ExchangeRatesBot.App\ExchangeRatesBot.App.csproj", "{28596329-3C6C-4313-B4BB-0BD591034F10}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7914465B-0C63-49AE-8BE1-F9939BF116D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRatesBot.DB", "ExchangeRatesBot.DB\ExchangeRatesBot.DB.csproj", "{D38F003A-A2B2-4B38-8E89-7E50BACCAAAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRatesBot.Migrations", "ExchangeRatesBot.Migrations\ExchangeRatesBot.Migrations.csproj", "{3FD746B3-11B2-47B4-88C5-F46FA0DE28AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,14 @@ Global
 		{28596329-3C6C-4313-B4BB-0BD591034F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28596329-3C6C-4313-B4BB-0BD591034F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28596329-3C6C-4313-B4BB-0BD591034F10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38F003A-A2B2-4B38-8E89-7E50BACCAAAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38F003A-A2B2-4B38-8E89-7E50BACCAAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38F003A-A2B2-4B38-8E89-7E50BACCAAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38F003A-A2B2-4B38-8E89-7E50BACCAAAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FD746B3-11B2-47B4-88C5-F46FA0DE28AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FD746B3-11B2-47B4-88C5-F46FA0DE28AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FD746B3-11B2-47B4-88C5-F46FA0DE28AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FD746B3-11B2-47B4-88C5-F46FA0DE28AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +56,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1CAA4480-0F27-42FC-B134-08FBE292AF87} = {3139BA97-31A0-409B-961D-746C8B117409}
 		{28596329-3C6C-4313-B4BB-0BD591034F10} = {3139BA97-31A0-409B-961D-746C8B117409}
+		{D38F003A-A2B2-4B38-8E89-7E50BACCAAAB} = {7914465B-0C63-49AE-8BE1-F9939BF116D0}
+		{3FD746B3-11B2-47B4-88C5-F46FA0DE28AA} = {7914465B-0C63-49AE-8BE1-F9939BF116D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3479E1B3-F6AD-45FE-8D78-1C2A37EB8A4C}

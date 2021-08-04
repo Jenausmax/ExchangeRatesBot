@@ -1,8 +1,11 @@
-﻿using ExchangeRatesBot.Domain.Interfaces;
+﻿using System.Collections.Generic;
+using ExchangeRatesBot.Domain.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
+using ExchangeRatesBot.App.Phrases;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace ExchangeRatesBot.App.Services
 {
@@ -55,6 +58,12 @@ namespace ExchangeRatesBot.App.Services
                         await _valuteService.GetValuteMessage(7, "USD", CancellationToken.None),//BotPhrases.Help,
                         default);
                     break;
+
+                case "Подписаться":
+                    break;
+
+                case "Отписаться":
+                    break;
             }
         }
 
@@ -66,18 +75,35 @@ namespace ExchangeRatesBot.App.Services
                 case "/start":
                     await _updateService.EchoTextMessageAsync(
                         update,
-                        await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),//BotPhrases.Help,
+                        await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),
                         default);
                     await _updateService.EchoTextMessageAsync(
                         update,
-                        await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),//BotPhrases.Help,
+                        await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),
                         default);
+
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        BotPhrases.StartMenu,
+                        new InlineKeyboardMarkup(Menu()));
                     break;
 
 
                 default:
                     break;
             }
+        }
+
+        private List<InlineKeyboardButton> Menu()
+        {
+            var button = new InlineKeyboardButton();
+            button.Text = "Подписаться";
+            var button2 = new InlineKeyboardButton();
+            button2.Text = "Отписаться";
+            var buttons = new List<InlineKeyboardButton>();
+            buttons.Add(button);
+            buttons.Add(button2);
+            return buttons;
         }
     }
 }
