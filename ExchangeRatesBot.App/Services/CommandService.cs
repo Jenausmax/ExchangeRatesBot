@@ -32,7 +32,6 @@ namespace ExchangeRatesBot.App.Services
             _update = update;
         }
 
-
         public async Task SetCommandBot(Telegram.Bot.Types.Enums.UpdateType type)
         {
             switch (type)
@@ -97,21 +96,41 @@ namespace ExchangeRatesBot.App.Services
             switch (message)
             {
                 case "/start":
-                    //await _updateService.EchoTextMessageAsync(
-                    //    update,
-                    //    await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),
-                    //    default);
-                    //await _updateService.EchoTextMessageAsync(
-                    //    update,
-                    //    await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),
-                    //    default);
-
                     await _updateService.EchoTextMessageAsync(
                         update,
                         BotPhrases.StartMenu,
                         new InlineKeyboardMarkup(Menu()));
                     break;
 
+                case "/subscribe":
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        BotPhrases.StartMenu,
+                        new InlineKeyboardMarkup(Menu()));
+                    break;
+
+                case "/valute7days":
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(8, "CNY", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(8, "GBP", CancellationToken.None),
+                        default);
+                    await _updateService.EchoTextMessageAsync(
+                        update,
+                        await _valuteService.GetValuteMessage(8, "JPY", CancellationToken.None),
+                        default);
+                    break;
 
                 default:
                     break;
