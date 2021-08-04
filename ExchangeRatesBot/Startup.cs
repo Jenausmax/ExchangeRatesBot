@@ -33,6 +33,7 @@ namespace ExchangeRatesBot
             services.AddScoped<ICommandBot, CommandService>();
             services.AddScoped<IApiClient, ApiClientService>();
             services.AddScoped<IMessageValute, MessageValuteService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped(typeof(IBaseRepositoryDb<>), (typeof(RepositoryDb<>)));
 
             services.Configure<BotConfig>(Config.GetSection("BotConfig"));

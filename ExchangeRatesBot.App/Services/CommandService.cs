@@ -13,14 +13,17 @@ namespace ExchangeRatesBot.App.Services
     {
         private readonly IUpdateService _updateService;
         private readonly IMessageValute _valuteService;
+        private readonly IUserService _userControl;
         private Update _update;
 
         public CommandService(IUpdateService updateService, 
             IProcessingService processingService,
-            IMessageValute valuteService)
+            IMessageValute valuteService,
+            IUserService userControl)
         {
             _updateService = updateService;
             _valuteService = valuteService;
+            _userControl = userControl;
         }
 
         public async Task SetUpdateBot(Update update)
@@ -34,6 +37,22 @@ namespace ExchangeRatesBot.App.Services
             switch (type)
             {
                 case UpdateType.Message:
+
+                    var resMessageUser = await _userControl.SetUser(_update.Message.From.Id);
+                    if (resMessageUser == false)
+                    {
+                        var user = new Domain.Models.User()
+                        {
+                            ChatId = _update.Message.From.Id,
+                            NickName = _update.Message.From.Username,
+                            Subscribe = false,
+                            FirstName = _update.Message.From.FirstName,
+                            LastName = _update.Message.From.LastName
+                        };
+                        await _userControl.Create(user, CancellationToken.None);
+                        await _userControl.SetUser(user.ChatId);
+                    }
+
                     await MessageCommand(_update);
                     break;
 
