@@ -14,6 +14,7 @@ namespace ExchangeRatesBot.App.Services
         {
             _config = config;
             Client = new TelegramBotClient(_config.Value.BotToken);
+            Client.SetWebhookAsync(_config.Value.Webhook);
         }
     }
 }
