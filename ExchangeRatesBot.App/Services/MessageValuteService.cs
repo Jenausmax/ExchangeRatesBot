@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using ExchangeRatesBot.Domain.Interfaces;
+﻿using ExchangeRatesBot.Domain.Interfaces;
 using ExchangeRatesBot.Domain.Models.GetModels;
 using Serilog;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ExchangeRatesBot.App.Services
 {
@@ -89,7 +87,7 @@ namespace ExchangeRatesBot.App.Services
 
             foreach (var valute in v)
             {
-                res = res + $" {valute.DateValute} --> {valute.Value}  {valute.Difference} \n\r ";
+                res = res + $" {valute.DateValute} ---> {valute.Value}  {valute.Difference} \n\r ";
             }
 
             return res;
@@ -102,7 +100,7 @@ namespace ExchangeRatesBot.App.Services
             foreach (var item in charCodesCollection)
             {
                 var valuteString = await GetValuteMessage(day, item, cancel);
-                result = result + valuteString + "\n\r" + "\n\r";
+                result = result + valuteString + "\n\r";
             }
             return result;
         }

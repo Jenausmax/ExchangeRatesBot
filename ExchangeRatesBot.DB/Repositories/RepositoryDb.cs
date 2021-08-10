@@ -1,11 +1,10 @@
 ﻿using ExchangeRatesBot.Domain.Interfaces;
 using ExchangeRatesBot.Domain.Models;
-using System;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Serilog;
 
 namespace ExchangeRatesBot.DB.Repositories
 {
