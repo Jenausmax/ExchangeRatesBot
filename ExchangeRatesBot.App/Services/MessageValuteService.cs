@@ -56,12 +56,12 @@ namespace ExchangeRatesBot.App.Services
                         if (valutes[i].Value > valutes[i + 1].Value)
                         {
                             var temp = valutes[i].Value - valutes[i + 1].Value;
-                            valutes[i + 1].Difference = $"- *{string.Format("{0:0.00}", temp)}*";
+                            valutes[i + 1].Difference = $"(- *{string.Format("{0:0.00}", temp)})*";
                         }
                         else
                         {
                             var temp = valutes[i + 1].Value - valutes[i].Value;
-                            valutes[i + 1].Difference = $"+ *{string.Format("{0:0.00}", temp)}*";
+                            valutes[i + 1].Difference = $"(+ *{string.Format("{0:0.00}", temp)})*";
                         }
                     }
                 }
@@ -93,6 +93,18 @@ namespace ExchangeRatesBot.App.Services
             }
 
             return res;
+        }
+
+        public async Task<string> GetValuteMessage(int day, string[] charCodesCollection, CancellationToken cancel)
+        {
+            string result = "";
+
+            foreach (var item in charCodesCollection)
+            {
+                var valuteString = await GetValuteMessage(day, item, cancel);
+                result = result + valuteString + "\n\r" + "\n\r";
+            }
+            return result;
         }
     }
 }

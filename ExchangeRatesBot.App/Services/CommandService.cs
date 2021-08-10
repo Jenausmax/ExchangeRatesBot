@@ -101,8 +101,7 @@ namespace ExchangeRatesBot.App.Services
                 case "/start":
                     await _updateService.EchoTextMessageAsync(
                         update,
-                        BotPhrases.StartMenu + $"\n\r /subscribe - подписка \n\r /valuteoneday - курс на сегодня \n\r /valutesevendays - курс за последние 7 дней",
-                        new InlineKeyboardMarkup(Menu()));
+                        BotPhrases.StartMenu + $"\n\r /subscribe - подписка \n\r /valuteoneday - курс на сегодня \n\r /valutesevendays - изменения курса за последние 7 дней \n\r");
                     break;
 
                 case "/subscribe":
@@ -115,46 +114,14 @@ namespace ExchangeRatesBot.App.Services
                 case "/valutesevendays":
                     await _updateService.EchoTextMessageAsync(
                         update,
-                        await _valuteService.GetValuteMessage(8, "USD", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(8, "EUR", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(8, "CNY", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(8, "GBP", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(8, "JPY", CancellationToken.None),
+                        await _valuteService.GetValuteMessage(8, BotPhrases.Valutes, CancellationToken.None),
                         default);
                     break;
 
                 case "/valuteoneday":
                     await _updateService.EchoTextMessageAsync(
                         update,
-                        await _valuteService.GetValuteMessage(1, "USD", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(1, "EUR", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(1, "CNY", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(1, "GBP", CancellationToken.None),
-                        default);
-                    await _updateService.EchoTextMessageAsync(
-                        update,
-                        await _valuteService.GetValuteMessage(1, "JPY", CancellationToken.None),
+                        await _valuteService.GetValuteMessage(1, BotPhrases.Valutes, CancellationToken.None),
                         default);
                     break;
 
