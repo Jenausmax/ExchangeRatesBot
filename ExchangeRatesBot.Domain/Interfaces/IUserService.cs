@@ -6,6 +6,8 @@ namespace ExchangeRatesBot.Domain.Interfaces
 {
     public interface IUserService
     {
+        CurrentUser CurrentUser { get; set; }
+
         /// <summary>
         /// Метод установки CurrentUser'а.
         /// </summary>

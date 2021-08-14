@@ -1,5 +1,4 @@
-﻿using ExchangeRatesBot.App.StaticModels;
-using ExchangeRatesBot.DB.Models;
+﻿using ExchangeRatesBot.DB.Models;
 using ExchangeRatesBot.Domain.Interfaces;
 using ExchangeRatesBot.Domain.Models;
 using System;
@@ -12,6 +11,9 @@ namespace ExchangeRatesBot.App.Services
     public class UserService : IUserService
     {
         private readonly IBaseRepositoryDb<UserDb> _userDb;
+
+
+        public CurrentUser CurrentUser { get; set; }
 
         public UserService(IBaseRepositoryDb<UserDb> userDb)
         {
