@@ -19,8 +19,8 @@ namespace ExchangeRatesBot.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Update update)
         {
-            await _commandBot.SetUpdateBot(update);
-            await _commandBot.SetCommandBot(update.Type);
+            //await _commandBot.SetUpdateBot(update);
+            await _commandBot.SetCommandBot(update);
             return Ok();
         }
     }

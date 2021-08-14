@@ -3,7 +3,6 @@ using ExchangeRatesBot.Domain.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 using ExchangeRatesBot.App.Phrases;
-using ExchangeRatesBot.App.StaticModels;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -15,7 +14,7 @@ namespace ExchangeRatesBot.App.Services
         private readonly IUpdateService _updateService;
         private readonly IMessageValute _valuteService;
         private readonly IUserService _userControl;
-        private Update _update;
+        //private Update _update;
 
         public CommandService(IUpdateService updateService, 
             IProcessingService processingService,
@@ -27,42 +26,42 @@ namespace ExchangeRatesBot.App.Services
             _userControl = userControl;
         }
 
-        public async Task SetUpdateBot(Update update)
-        {
-            _update = update;
-        }
+        //public async Task SetUpdateBot(Update update)
+        //{
+        //    _update = update;
+        //}
 
-        public async Task SetCommandBot(Telegram.Bot.Types.Enums.UpdateType type)
+        public async Task SetCommandBot(Update update)
         {
-            switch (type)
+            switch (update.Type)
             {
                 case UpdateType.Message:
 
-                    var resMessageUser = await _userControl.SetUser(_update.Message.From.Id);
-                    if (resMessageUser == false)
+                    var resMessageUser = await _userControl.SetUser(update.Message.From.Id);
+                    if (!resMessageUser)
                     {
                         var user = new Domain.Models.User()
                         {
-                            ChatId = _update.Message.From.Id,
-                            NickName = _update.Message.From.Username,
+                            ChatId = update.Message.From.Id,
+                            NickName = update.Message.From.Username,
                             Subscribe = false,
-                            FirstName = _update.Message.From.FirstName,
-                            LastName = _update.Message.From.LastName
+                            FirstName = update.Message.From.FirstName,
+                            LastName = update.Message.From.LastName
                         };
                         await _userControl.Create(user, CancellationToken.None);
                         await _userControl.SetUser(user.ChatId);
                     }
 
-                    await MessageCommand(_update);
+                    await MessageCommand(update);
                     break;
 
                 case UpdateType.CallbackQuery:
-                    await CallbackMessageCommand(_update);
+                    await CallbackMessageCommand(update);
                     break;
 
                 default:
                     await _updateService.EchoTextMessageAsync(
-                        _update,
+                        update,
                         BotPhrases.Error,
                         default);
                     break;

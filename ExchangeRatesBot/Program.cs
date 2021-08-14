@@ -46,5 +46,10 @@ namespace ExchangeRatesBot
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+                //.UseDefaultServiceProvider(sp =>
+                //{
+                //    sp.ValidateOnBuild = true;
+                //    sp.ValidateScopes = true;
+                //});
     }
 }
