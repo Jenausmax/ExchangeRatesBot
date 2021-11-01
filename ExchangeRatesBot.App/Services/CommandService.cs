@@ -75,7 +75,7 @@ namespace ExchangeRatesBot.App.Services
             {
 
                 case "Подписаться":
-                    await _userControl.SubscribeUpdate(CurrentUser.ChatId, true, CancellationToken.None);
+                    await _userControl.SubscribeUpdate(_userControl.CurrentUser.ChatId, true, CancellationToken.None);
                     await _updateService.EchoTextMessageAsync(
                         update,
                         BotPhrases.SubscribeTrue,
@@ -83,7 +83,7 @@ namespace ExchangeRatesBot.App.Services
                     break;
 
                 case "Отписаться":
-                    await _userControl.SubscribeUpdate(CurrentUser.ChatId, false, CancellationToken.None);
+                    await _userControl.SubscribeUpdate(_userControl.CurrentUser.ChatId, false, CancellationToken.None);
                     await _updateService.EchoTextMessageAsync(
                         update,
                         BotPhrases.SubscribeFalse,
