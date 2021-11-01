@@ -18,6 +18,7 @@ namespace ExchangeRatesBot.App.Services
         public UserService(IBaseRepositoryDb<UserDb> userDb)
         {
             _userDb = userDb;
+            CurrentUser = new CurrentUser();
         }
         public async Task<bool> SetUser(long chatId, User user = default, CancellationToken cancel = default)
         {
