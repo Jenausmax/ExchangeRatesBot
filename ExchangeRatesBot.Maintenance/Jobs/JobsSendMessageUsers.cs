@@ -11,6 +11,7 @@ using ExchangeRatesBot.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot.Types.Enums;
 using ExchangeRatesBot.App.Phrases;
+using System.Collections.Generic;
 
 namespace ExchangeRatesBot.Maintenance.Jobs
 {
@@ -38,41 +39,38 @@ namespace ExchangeRatesBot.Maintenance.Jobs
             DateTime.TryParse(_config.Value.TimeOne, out timeOne);
             DateTime.TryParse(_config.Value.TimeTwo, out timeTwo);
 
-            var botService = scope.GetRequiredService<IBotService>();
-            var repo = scope.GetRequiredService<IBaseRepositoryDb<UserDb>>();
-            var messageValute = scope.GetRequiredService<IMessageValute>();
-
-            var usersCollectionDb = await repo.GetCollection(cancel);
-            var users = usersCollectionDb.Where(u => u.Subscribe == true);
-
             if (timeNow == timeOne)
             {
-                var message = await messageValute.GetValuteMessage(1, BotPhrases.Valutes, cancel);
-
-                if (users.Any())
-                {
-                    foreach (var userDb in users)
-                    {
-                        await botService.Client.SendTextMessageAsync(userDb.ChatId, message, parseMode: ParseMode.Markdown);
-                    }
-                }
+                await TaskListUsers(scope, cancel);
 
                 _logger.Information($"Type: {typeof(JobsSendMessageUsers)}. Task day complete.");
             }
 
             if (timeNow == timeTwo)
             {
-                var message = await messageValute.GetValuteMessage(1, BotPhrases.Valutes, cancel);
-
-                if (users.Any())
-                {
-                    foreach (var userDb in users)
-                    {
-                        await botService.Client.SendTextMessageAsync(userDb.ChatId, message, parseMode: ParseMode.Markdown);
-                    }
-                }
+                await TaskListUsers(scope, cancel);
 
                 _logger.Information($"Type: {typeof(JobsSendMessageUsers)}. Task night complete.");
+            }
+        }
+
+        private async Task TaskListUsers(IServiceProvider scope, CancellationToken cancel)
+        {
+            var botService = scope.GetRequiredService<IBotService>();
+            var messageValute = scope.GetRequiredService<IMessageValute>();
+            var repo = scope.GetRequiredService<IBaseRepositoryDb<UserDb>>();
+            var usersCollectionDb = await repo.GetCollection(cancel);
+
+            var users = usersCollectionDb.Where(u => u.Subscribe == true).ToArray();
+
+            var message = await messageValute.GetValuteMessage(1, BotPhrases.Valutes, cancel);
+
+            if (users.Any())
+            {
+                foreach (var userDb in users)
+                {
+                    await botService.Client.SendTextMessageAsync(userDb.ChatId, message, parseMode: ParseMode.Markdown);
+                }
             }
         }
     }
