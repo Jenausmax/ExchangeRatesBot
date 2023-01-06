@@ -1,3 +1,4 @@
+using System;
 using ExchangeRatesBot.App.Services;
 using ExchangeRatesBot.Configuration.ModelConfig;
 using ExchangeRatesBot.DB;
@@ -10,13 +11,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 
 namespace ExchangeRatesBot
 {
     public class Startup
     {
-        public IConfiguration Config { get; }
+        IConfiguration Config { get; }
 
         public Startup(IConfiguration config)
         {
@@ -29,11 +29,15 @@ namespace ExchangeRatesBot
                 options.UseSqlite(Config.GetConnectionString("SqliteConnection"))
                        .UseSqlite(sqliteOptionsAction: b => b.MigrationsAssembly("ExchangeRatesBot.Migrations")));
 
+            services.AddHttpClient("client", c =>
+            {
+                c.BaseAddress = new Uri(Config.GetSection("BotConfig")["UrlRequest"]!);
+            });
+
             services.AddSingleton<IBotService, BotService>();
             services.AddScoped<IUpdateService, UpdateService>();
             services.AddScoped<IProcessingService, ProcessingService>();
             services.AddScoped<ICommandBot, CommandService>();
-            services.AddScoped<IApiClient, ApiClientService>();
             services.AddScoped<IMessageValute, MessageValuteService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped(typeof(IBaseRepositoryDb<>), (typeof(RepositoryDb<>)));

@@ -11,8 +11,8 @@ namespace ExchangeRatesBot.Domain.Interfaces
         /// </summary>
         /// <param name="day">Количество дней.</param>
         /// <param name="charCode">Код валюты.</param>
-        /// <param name="cancel"></param>
+        /// <param name="cancellationToken">Токен отмены.</param>
         /// <returns></returns>
-        Task<Root> RequestProcessing(int day, string charCode, CancellationToken cancel);
+        Task<Root> RequestProcessingAsync(int day, string charCode, CancellationToken cancellationToken);
     }
 }

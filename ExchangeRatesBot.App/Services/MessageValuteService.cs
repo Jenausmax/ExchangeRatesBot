@@ -21,7 +21,7 @@ namespace ExchangeRatesBot.App.Services
 
         public async Task<string> GetValuteMessage(int day, string charCode, CancellationToken cancel)
         {
-            var valutesRoot = await _processingService.RequestProcessing(day, charCode, cancel);
+            var valutesRoot = await _processingService.RequestProcessingAsync(day, charCode, cancel);
 
             if (valutesRoot == null || day == 0)
             {
@@ -87,7 +87,7 @@ namespace ExchangeRatesBot.App.Services
 
             foreach (var valute in v)
             {
-                res = res + $" {valute.DateValute} ---> {valute.Value}  {valute.Difference} \n\r ";
+                res += $" {valute.DateValute} ---> {valute.Value}  {valute.Difference} \n\r ";
             }
 
             return res;

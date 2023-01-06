@@ -1,41 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ExchangeRatesBot.Domain.Interfaces;
+using ExchangeRatesBot.Domain.Models;
+using Serilog;
+using System;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using ExchangeRatesBot.Configuration.ModelConfig;
-using ExchangeRatesBot.Domain.Interfaces;
-using ExchangeRatesBot.Domain.Models;
-using Microsoft.Extensions.Options;
-using Serilog;
 
 namespace ExchangeRatesBot.App.Services
 {
     public class ProcessingService : IProcessingService
     {
-        private readonly IApiClient _client;
-        private readonly IOptions<BotConfig> _config;
+        private readonly HttpClient _client;
         private readonly ILogger _logger;
 
-        public ProcessingService(IApiClient apiClient,
-            IOptions<BotConfig> config,
+        public ProcessingService(IHttpClientFactory clientFactory,
             ILogger logger)
         {
-            _client = apiClient;
-            _config = config;
+            _client = clientFactory.CreateClient("client");
             _logger = logger;
         }
 
-        public async Task<Root> RequestProcessing(int day, string charCode, CancellationToken cancel)
+        public async Task<Root> RequestProcessingAsync(int day, string charCode, CancellationToken cancellationToken)
         {
             try
             {
-                var resp = await _client.Client.PostAsync($"?charcode={charCode}&day={day}", null);
+                var resp = await _client.PostAsync($"?charcode={charCode}&day={day}", null, cancellationToken);
                 var resultContent = await resp.Content.ReadAsStreamAsync();
-                var res = await JsonSerializer.DeserializeAsync<Root>(resultContent);
+                var res = await JsonSerializer.DeserializeAsync<Root>(resultContent, cancellationToken: cancellationToken);
                 _logger.Information("Deserialize succes");
                 return res;
             }
