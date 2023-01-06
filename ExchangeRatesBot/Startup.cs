@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace ExchangeRatesBot
 {
@@ -52,6 +53,7 @@ namespace ExchangeRatesBot
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ApplicationServices.GetService<IBotService>();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

@@ -1,17 +1,18 @@
-﻿using ExchangeRatesBot.Configuration.ModelConfig;
+﻿using ExchangeRatesBot.App.Phrases;
+using ExchangeRatesBot.Configuration.ModelConfig;
+using ExchangeRatesBot.DB.Models;
+using ExchangeRatesBot.Domain.Interfaces;
 using ExchangeRatesBot.Maintenance.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Serilog;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ExchangeRatesBot.DB.Models;
-using ExchangeRatesBot.Domain.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
-using ExchangeRatesBot.App.Phrases;
-using System.Collections.Generic;
+using static ExchangeRatesBot.Maintenance.Jobs.JobConstants;
 
 namespace ExchangeRatesBot.Maintenance.Jobs
 {
@@ -41,35 +42,35 @@ namespace ExchangeRatesBot.Maintenance.Jobs
 
             if (timeNow == timeOne)
             {
-                await TaskListUsers(scope, cancel);
+                await TaskListUsersAsync(scope, cancel);
 
-                _logger.Information($"Type: {typeof(JobsSendMessageUsers)}. Task day complete.");
+                _logger.Information(Day);
             }
 
             if (timeNow == timeTwo)
             {
-                await TaskListUsers(scope, cancel);
+                await TaskListUsersAsync(scope, cancel);
 
-                _logger.Information($"Type: {typeof(JobsSendMessageUsers)}. Task night complete.");
+                _logger.Information(Night);
             }
         }
 
-        private async Task TaskListUsers(IServiceProvider scope, CancellationToken cancel)
+        private async Task TaskListUsersAsync(IServiceProvider scope, CancellationToken cancellationToken)
         {
             var botService = scope.GetRequiredService<IBotService>();
             var messageValute = scope.GetRequiredService<IMessageValute>();
             var repo = scope.GetRequiredService<IBaseRepositoryDb<UserDb>>();
-            var usersCollectionDb = await repo.GetCollection(cancel);
+            var usersCollectionDb = await repo.GetCollection(cancellationToken);
 
             var users = usersCollectionDb.Where(u => u.Subscribe == true).ToArray();
 
-            var message = await messageValute.GetValuteMessage(1, BotPhrases.Valutes, cancel);
+            var message = await messageValute.GetValuteMessage(1, BotPhrases.Valutes, cancellationToken);
 
             if (users.Any())
             {
                 foreach (var userDb in users)
                 {
-                    await botService.Client.SendTextMessageAsync(userDb.ChatId, message, parseMode: ParseMode.Markdown);
+                    await botService.Client.SendTextMessageAsync(userDb.ChatId, message, parseMode: ParseMode.Markdown, cancellationToken: cancellationToken);
                 }
             }
         }

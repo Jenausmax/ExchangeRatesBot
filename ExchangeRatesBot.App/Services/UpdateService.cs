@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExchangeRatesBot.Domain.Interfaces;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -35,6 +36,7 @@ namespace ExchangeRatesBot.App.Services
                         entities: null,
                         disableWebPagePreview: false,
                         disableNotification: false,
+                        protectContent: false,
                         replyToMessageId: 0,
                         allowSendingWithoutReply: false,
                         keyboard);
@@ -53,6 +55,7 @@ namespace ExchangeRatesBot.App.Services
                         entities: null,
                         disableWebPagePreview: false,
                         disableNotification: false,
+                        protectContent: false,
                         replyToMessageId: 0,
                         allowSendingWithoutReply: false,
                         keyboard);

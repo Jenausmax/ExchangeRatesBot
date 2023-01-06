@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ExchangeRatesBot.Domain.Models
+namespace ExchangeRatesBot.Domain.Models;
+
+/// <summary>
+/// Абстрактная сущность.
+/// </summary>
+public class Entity
 {
-    public class Entity
-    {
-        [Key]
-        public int Id { get; set; }
-    }
+    /// <summary>
+    /// Идентификатор.
+    /// </summary>
+    [Key]
+    public int Id { get; set; }
 }

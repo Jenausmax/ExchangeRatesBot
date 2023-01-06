@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using ExchangeRatesBot.Configuration.ModelConfig;
+﻿using ExchangeRatesBot.Configuration.ModelConfig;
 using ExchangeRatesBot.Domain.Interfaces;
 using Microsoft.Extensions.Options;
+using System;
+using System.Net.Http;
 
 namespace ExchangeRatesBot.App.Services
 {
