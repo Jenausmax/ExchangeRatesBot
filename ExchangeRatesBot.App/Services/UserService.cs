@@ -12,7 +12,6 @@ namespace ExchangeRatesBot.App.Services
     {
         private readonly IBaseRepositoryDb<UserDb> _userDb;
 
-
         public CurrentUser CurrentUser { get; set; }
 
         public UserService(IBaseRepositoryDb<UserDb> userDb)
@@ -20,7 +19,8 @@ namespace ExchangeRatesBot.App.Services
             _userDb = userDb;
             CurrentUser = new CurrentUser();
         }
-        public async Task<bool> SetUser(long chatId, User user = default, CancellationToken cancel = default)
+
+        public async Task<bool> SetUserAsync(long chatId, User user = default, CancellationToken cancel = default)
         {
             var users = await _userDb.GetCollection(cancel);
             if (chatId == 0) throw new NullReferenceException("User chatId null");
@@ -37,13 +37,13 @@ namespace ExchangeRatesBot.App.Services
 
             if (user is not null)
             {
-                return await Create(user, cancel);
+                return await CreateAsync(user, cancel);
             }
 
             return false;
         }
 
-        public async Task<bool> Create(User user, CancellationToken cancel)
+        public async Task<bool> CreateAsync(User user, CancellationToken cancel)
         {
             if (user is null) throw new ArgumentNullException(nameof(user));
 
@@ -57,7 +57,7 @@ namespace ExchangeRatesBot.App.Services
             return await _userDb.Create(userDb, cancel);
         }
 
-        public async Task<bool> SubscribeUpdate(long chatId, bool subscribe, CancellationToken cancel)
+        public async Task<bool> SubscribeUpdateAsync(long chatId, bool subscribe, CancellationToken cancel)
         {
             var usersDb = await _userDb.GetCollection(cancel);
 

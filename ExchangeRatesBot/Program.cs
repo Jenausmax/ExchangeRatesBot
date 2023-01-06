@@ -34,7 +34,7 @@ namespace ExchangeRatesBot
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseSerilog((context, services, configuration) => configuration
                     .ReadFrom.Configuration(context.Configuration)
@@ -46,10 +46,5 @@ namespace ExchangeRatesBot
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-                //.UseDefaultServiceProvider(sp =>
-                //{
-                //    sp.ValidateOnBuild = true;
-                //    sp.ValidateScopes = true;
-                //});
     }
 }

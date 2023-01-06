@@ -37,7 +37,7 @@ namespace ExchangeRatesBot.App.Services
             {
                 case UpdateType.Message:
 
-                    var resMessageUser = await _userControl.SetUser(update.Message.From.Id);
+                    var resMessageUser = await _userControl.SetUserAsync(update.Message.From.Id);
                     if (!resMessageUser)
                     {
                         var user = new Domain.Models.User()
@@ -48,8 +48,8 @@ namespace ExchangeRatesBot.App.Services
                             FirstName = update.Message.From.FirstName,
                             LastName = update.Message.From.LastName
                         };
-                        await _userControl.Create(user, CancellationToken.None);
-                        await _userControl.SetUser(user.ChatId);
+                        await _userControl.CreateAsync(user, CancellationToken.None);
+                        await _userControl.SetUserAsync(user.ChatId);
                     }
 
                     await MessageCommand(update);
@@ -75,7 +75,7 @@ namespace ExchangeRatesBot.App.Services
             {
 
                 case "Подписаться":
-                    await _userControl.SubscribeUpdate(_userControl.CurrentUser.ChatId, true, CancellationToken.None);
+                    await _userControl.SubscribeUpdateAsync(_userControl.CurrentUser.ChatId, true, CancellationToken.None);
                     await _updateService.EchoTextMessageAsync(
                         update,
                         BotPhrases.SubscribeTrue,
@@ -83,7 +83,7 @@ namespace ExchangeRatesBot.App.Services
                     break;
 
                 case "Отписаться":
-                    await _userControl.SubscribeUpdate(_userControl.CurrentUser.ChatId, false, CancellationToken.None);
+                    await _userControl.SubscribeUpdateAsync(_userControl.CurrentUser.ChatId, false, CancellationToken.None);
                     await _updateService.EchoTextMessageAsync(
                         update,
                         BotPhrases.SubscribeFalse,

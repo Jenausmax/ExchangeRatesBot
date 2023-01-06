@@ -58,6 +58,7 @@ namespace ExchangeRatesBot
             }
 
             app.ApplicationServices.GetService<IBotService>();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

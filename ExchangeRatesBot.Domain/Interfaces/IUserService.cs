@@ -9,14 +9,29 @@ namespace ExchangeRatesBot.Domain.Interfaces
         CurrentUser CurrentUser { get; set; }
 
         /// <summary>
-        /// Метод установки CurrentUser'а.
+        /// Метод установки текущего юзера.
         /// </summary>
         /// <param name="chatId">Чат id юзера.</param>
         /// <param name="user"></param>
         /// <param name="cancel"></param>
         /// <returns></returns>
-        Task<bool> SetUser(long chatId, User user = default, CancellationToken cancel = default);
-        Task<bool> Create(User user, CancellationToken cancel);
-        Task<bool> SubscribeUpdate(long chatId, bool subscribe, CancellationToken cancel);
+        Task<bool> SetUserAsync(long chatId, User user = default, CancellationToken cancel = default);
+
+        /// <summary>
+        /// Метод создания юзера.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="cancel"></param>
+        /// <returns></returns>
+        Task<bool> CreateAsync(User user, CancellationToken cancel);
+
+        /// <summary>
+        /// Метод подписки юзера.
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <param name="subscribe"></param>
+        /// <param name="cancel"></param>
+        /// <returns></returns>
+        Task<bool> SubscribeUpdateAsync(long chatId, bool subscribe, CancellationToken cancel);
     }
 }
